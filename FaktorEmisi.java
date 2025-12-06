@@ -1,5 +1,5 @@
 public class FaktorEmisi {
-    private long id;
+    private int id;
     private String jenisBBM;
     private double faktorCO2perLiter;
 }
