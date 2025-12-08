@@ -1,7 +1,8 @@
-public class KendaraanSolar extends Kendaraan implements Emisiable {
+public class KendaraanSolar extends Kendaraan {
 
-    public KendaraanSolar() {
-        super(0, null, null, 0);
+    
+    public KendaraanSolar(int id, String nama, int emisi_id, double efisiensiKmPerLiter, int userId) {
+        super(id, nama, emisi_id, efisiensiKmPerLiter, userId);
     }
 
     @Override

@@ -1,7 +1,7 @@
-public class KendaraanListrik extends Kendaraan implements Emisiable {
+public class KendaraanListrik extends Kendaraan {
 
-    public KendaraanListrik(int  id, String nama, FaktorEmisi emisi, double efisiensiKmPerLiter) {
-        super(id, nama, emisi, efisiensiKmPerLiter);
+    public KendaraanListrik(int  id, String nama, int emisi_id, double efisiensiKmPerLiter, int userId) {
+        super(id, nama, emisi_id, efisiensiKmPerLiter, userId);
     }
     @Override
     public double hitungEmisi() {

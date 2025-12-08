@@ -1,7 +1,7 @@
-public class KendaraanBensin extends Kendaraan implements Emisiable {
+public class KendaraanBensin extends Kendaraan {
 
-    public KendaraanBensin() {
-        super(0, null, null, 0);
+    public KendaraanBensin(int id, String nama, int emisi_id, double efisiensiKmPerLiter, int userId) {
+        super(id, nama, emisi_id, efisiensiKmPerLiter, userId);
     }
 
     @Override
