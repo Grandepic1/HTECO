@@ -1,3 +1,4 @@
+package model;
 public class KendaraanListrik extends Kendaraan {
 
     public KendaraanListrik(int  id, String nama, int emisi_id, double efisiensiKmPerLiter, int userId) {

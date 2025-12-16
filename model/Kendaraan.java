@@ -1,3 +1,4 @@
+package model;
 public abstract class Kendaraan implements Emisiable {
     protected int id;
     protected String nama;

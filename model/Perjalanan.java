@@ -1,3 +1,4 @@
+package model;
 public class Perjalanan{
     private int id;
     private double jarakKm;
