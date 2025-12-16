@@ -11,7 +11,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(
                 getClass().getResource("/ui/login.fxml"));
         stage.setScene(new Scene(root));
-        stage.setTitle("Kendaraan App");
+        stage.setTitle("HTECCO");
         stage.show();
     }
 
