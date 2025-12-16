@@ -12,9 +12,9 @@ public class AuthService {
     public User login(String username, String password) {
         User user = userDAO.findByUsername(username);
 
-        if (user == null)
+        if (user == null){
             return null;
-
+        }
         if (!BCrypt.checkpw(password, user.getPasswordHash())) {
             return null;
         }

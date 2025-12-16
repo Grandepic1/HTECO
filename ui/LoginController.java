@@ -24,17 +24,21 @@ public class LoginController {
     private Label errorLabel;
 
     public void handleLogin() {
-        try {
-            User user = authService.login(
-                    usernameField.getText(),
-                    passwordField.getText());
 
-            Session.setUser(user);
-            openDashboard();
+        errorLabel.setVisible(false);
 
-        } catch (Exception e) {
+        User user = authService.login(
+                usernameField.getText(),
+                passwordField.getText());
+
+        if (user == null) {
             errorLabel.setText("Invalid username or password");
+            errorLabel.setVisible(true);
+            return;
         }
+        Session.setUser(user);
+        openDashboard();
+
     }
 
     private void openDashboard() {
