@@ -17,6 +17,11 @@ public abstract class Kendaraan implements Emisiable {
     @Override
     public abstract double hitungEmisi();
     
+    @Override
+    public String toString() {
+        return nama + " (" + getClass().getSimpleName() + ")";
+
+    }
 }
 
 

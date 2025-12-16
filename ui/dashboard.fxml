@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+
+<VBox spacing="10"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ui.DashboardController">
+
+    <Label fx:id="welcomeLabel"/>
+    <ListView fx:id="kendaraanList"/>
+    <Button text="Add Kendaraan" onAction="#handleAdd"/>
+    <Button text="Delete Selected" onAction="#handleDelete"/>
+
+</VBox>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="ui.LoginController">
+
+    <VBox spacing="15" maxWidth="300"
+          alignment="CENTER"
+          style="-fx-padding: 30; -fx-background-color: white; -fx-border-radius: 8;">
+
+        <Label text="Login" style="-fx-font-size: 20;"/>
+
+        <TextField fx:id="usernameField" promptText="Username"/>
+        <PasswordField fx:id="passwordField" promptText="Password"/>
+
+        <Button text="Login" onAction="#handleLogin" maxWidth="Infinity"/>
+
+        <Label fx:id="errorLabel" style="-fx-text-fill: red;"/>
+
+    </VBox>
+
+</StackPane>

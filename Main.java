@@ -1,11 +1,21 @@
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import java.util.Scanner;
+public class Main extends Application {
 
-import model.User;
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(
+                getClass().getResource("/ui/login.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Kendaraan App");
+        stage.show();
+    }
 
-public class Main {
-    private static User currentUser = null;
     public static void main(String[] args) {
-        
+        launch(args);
     }
 }
