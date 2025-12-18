@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ui.LandingController"
+      spacing="0"
+      styleClass="root">
+
+    <!-- Navbar -->
+    <fx:include source="/ui/navbar-not-logged-in.fxml"/>
+
+    <!-- HERO SECTION -->
+    <VBox alignment="CENTER"
+          spacing="20"
+          VBox.vgrow="ALWAYS"
+          styleClass="hero">
+
+        <padding>
+            <Insets top="60" right="60" bottom="60" left="60"/>
+        </padding>
+
+        <Label text="New: Hybrid Vehicle Support ⚡"
+               styleClass="badge"/>
+
+        <Label text="Pantau Jejak Karbon."
+               styleClass="hero-title"/>
+
+        <Label text="Mulai Perubahan Nyata."
+               styleClass="hero-title-gradient"/>
+
+        <Label text="Platform monitoring emisi kendaraan yang simpel dan transparan.
+Kelola aset kendaraan, catat perjalanan, dan lihat dampakmu terhadap lingkungan."
+               wrapText="true"
+               maxWidth="600"
+               styleClass="hero-subtitle"/>
+
+        <HBox spacing="16" alignment="CENTER">
+            <Button text="Mulai Sekarang →"
+                    onAction="#handleRegister"
+                    styleClass="primary-button"/>
+
+            <Button text="Lihat Demo"
+                    onAction="#handleLogin"
+                    styleClass="secondary-button"/>
+        </HBox>
+    </VBox>
+
+    <!-- FEATURES -->
+    <VBox spacing="40"
+          styleClass="section-white">
+
+        <padding>
+            <Insets top="60" right="60" bottom="60" left="60"/>
+        </padding>
+
+        <VBox alignment="CENTER" spacing="8">
+            <Label text="Fitur Utama" styleClass="section-title"/>
+            <Label text="Semua yang kamu butuhkan untuk manajemen emisi."
+                   styleClass="section-subtitle"/>
+        </VBox>
+
+        <GridPane hgap="24" vgap="24" alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="33"/>
+                <ColumnConstraints percentWidth="33"/>
+                <ColumnConstraints percentWidth="33"/>
+            </columnConstraints>
+
+            <!-- Card 1 -->
+            <VBox GridPane.columnIndex="0" styleClass="feature-card">
+                <Label text="🚘" styleClass="feature-icon"/>
+                <Label text="Manajemen Garasi" styleClass="feature-title"/>
+                <Label text="Database kendaraan lengkap dengan spesifikasi pabrik."
+                       wrapText="true"
+                       styleClass="feature-text"/>
+            </VBox>
+
+            <!-- Card 2 -->
+            <VBox GridPane.columnIndex="1" styleClass="feature-card">
+                <Label text="📝" styleClass="feature-icon"/>
+                <Label text="Pencatatan Mudah" styleClass="feature-title"/>
+                <Label text="Hitung emisi CO2 secara otomatis dan akurat."
+                       wrapText="true"
+                       styleClass="feature-text"/>
+            </VBox>
+
+            <!-- Card 3 -->
+            <VBox GridPane.columnIndex="2" styleClass="feature-card">
+                <Label text="📈" styleClass="feature-icon"/>
+                <Label text="Laporan &amp; Insight" styleClass="feature-title"/>
+                <Label text="Visualisasi tren emisi harian hingga bulanan."
+                       wrapText="true"
+                       styleClass="feature-text"/>
+            </VBox>
+        </GridPane>
+    </VBox>
+
+</VBox>

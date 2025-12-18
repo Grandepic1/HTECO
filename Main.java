@@ -15,7 +15,7 @@ public class Main extends Application {
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
 
         Parent root = FXMLLoader.load(
-                getClass().getResource("/ui/login.fxml"));
+                getClass().getResource("/ui/Landing.fxml"));
 
         Scene scene = new Scene(
                 root,
@@ -24,6 +24,10 @@ public class Main extends Application {
 
         stage.setScene(scene);
         stage.setTitle("HTECO");
+        scene.getStylesheets().add(
+            getClass().getResource("/ui/landing.css").toExternalForm()
+        );
+
 
         // register stage
         SceneUtil.setStage(stage);
