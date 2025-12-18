@@ -27,7 +27,7 @@ public class KendaraanDAO {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Eksepsi : " + e);
         }
 
         return list;
@@ -52,7 +52,7 @@ public class KendaraanDAO {
             ps.executeUpdate();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("Eksepsi : " + e);
         }
     }
 
@@ -66,8 +66,8 @@ public class KendaraanDAO {
             ps.setInt(1, kendaraanId);
             ps.setInt(2, userId);
             ps.executeUpdate();
-        } catch (SQLException e){
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Eksepsi : " + e);
         }
     }
 

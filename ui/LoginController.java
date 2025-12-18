@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.User;
 import service.AuthService;
+import util.SceneUtil;
 import util.Session;
 
 public class LoginController {
@@ -37,18 +38,8 @@ public class LoginController {
             return;
         }
         Session.setUser(user);
-        openDashboard();
+        SceneUtil.switchScene("/ui/dashboard.fxml");
 
     }
 
-    private void openDashboard() {
-        try {
-            Stage stage = (Stage) usernameField.getScene().getWindow();
-            Parent root = FXMLLoader.load(
-                    getClass().getResource("/ui/dashboard.fxml"));
-            stage.setScene(new Scene(root));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
