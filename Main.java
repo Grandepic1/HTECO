@@ -24,9 +24,6 @@ public class Main extends Application {
 
         stage.setScene(scene);
         stage.setTitle("HTECO");
-        scene.getStylesheets().add(
-            getClass().getResource("/ui/landing.css").toExternalForm()
-        );
 
 
         // register stage

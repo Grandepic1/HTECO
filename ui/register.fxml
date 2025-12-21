@@ -5,53 +5,47 @@
 <?import javafx.geometry.*?>
 
 <StackPane xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="ui.LoginController"
+           fx:controller="ui.RegisterController"
            style="-fx-background-color: #f8fafc;">
 
     <!-- Card -->
     <VBox spacing="18"
           alignment="CENTER"
-          maxWidth="360"
+          maxWidth="380"
           style="
             -fx-background-color: white;
             -fx-padding: 32;
             -fx-background-radius: 16;
             -fx-border-radius: 16;
+            -fx-border-color: #e5e7eb;
             -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.12), 20, 0, 0, 6);
           ">
 
         <!-- Header -->
         <VBox spacing="6" alignment="CENTER">
             <Label text="🌿" style="-fx-font-size: 36;"/>
-            <Label text="Welcome Back"
+            <Label text="Buat Akun Baru"
                    style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #1f2937;"/>
-            <Label text="Masuk untuk memantau jejak karbonmu."
+            <Label text="Mulai perjalanan hijau perusahaanmu."
                    style="-fx-font-size: 12; -fx-text-fill: #64748b;"/>
         </VBox>
 
-        <!-- Role Switch -->
-        <HBox spacing="4"
-              style="-fx-background-color: #f1f5f9; -fx-padding: 4; -fx-background-radius: 10;">
-            <Button fx:id="btnUser"
-                    text="Pegawai (User)"
-                    onAction="#onSelectUser"
-                    maxWidth="Infinity"
-                    HBox.hgrow="ALWAYS"
-                    styleClass="role-button"/>
-            <Button fx:id="btnAdmin"
-                    text="Admin / Spv"
-                    onAction="#onSelectAdmin"
-                    maxWidth="Infinity"
-                    HBox.hgrow="ALWAYS"
-                    styleClass="role-button"/>
-        </HBox>
+        <!-- Nama -->
+        <VBox spacing="4">
+            <Label text="NAMA LENGKAP"
+                   style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #64748b;"/>
+            <TextField fx:id="nameField"
+                       promptText="Alex John"
+                       styleClass="input"/>
+        </VBox>
+         <Label fx:id="errorName" style="-fx-text-fill: red;"/>
 
         <!-- Email -->
         <VBox spacing="4">
-            <Label text="USERNAME"
+            <Label text="EMAIL KANTOR"
                    style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #64748b;"/>
-            <TextField fx:id="usernameField"
-                       promptText="Masukkan username"
+            <TextField fx:id="emailField"
+                       promptText="alex@company.com"
                        styleClass="input"/>
         </VBox>
 
@@ -64,10 +58,19 @@
                            styleClass="input"/>
         </VBox>
 
-        <!-- Login Button -->
-        <Button fx:id="loginButton"
-                text="Login"
-                onAction="#onLogin"
+        <!-- Confirm Password -->
+        <VBox spacing="4">
+            <Label text="KONFIRMASI PASSWORD"
+                   style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #64748b;"/>
+            <PasswordField fx:id="confirmPasswordField"
+                           promptText="••••••••"
+                           styleClass="input"/>
+        </VBox>
+
+        <!-- Register Button -->
+        <Button fx:id="registerButton"
+                text="Daftar Sekarang"
+                onAction="#onRegister"
                 maxWidth="Infinity"
                 style="
                   -fx-background-color: #0f172a;
@@ -77,16 +80,14 @@
                   -fx-padding: 12;
                 "/>
 
-        <!-- Register -->
+        <!-- Login link -->
         <HBox spacing="6" alignment="CENTER">
-            <Label text="Belum punya akun?"
+            <Label text="Sudah punya akun?"
                    style="-fx-font-size: 12; -fx-text-fill: #64748b;"/>
-            <Hyperlink text="Register"
-                       onAction="#onRegister"
+            <Hyperlink text="Login"
+                       onAction="#onLogin"
                        style="-fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
         </HBox>
-
-        <Label fx:id="errorLabel" style="-fx-text-fill: red;"/>
 
     </VBox>
 </StackPane>
