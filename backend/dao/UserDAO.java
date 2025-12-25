@@ -34,6 +34,30 @@ public class UserDAO {
             return null;
         }
     }
+    public User findById(int id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+
+        try (Connection conn = k.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (!rs.next())
+                return null;
+
+            return UserFactory.createUser(
+                    rs.getInt("id"),
+                    rs.getString("username"),
+                    rs.getString("email"),
+                    rs.getString("password"),
+                    Role.valueOf(rs.getString("role")));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public boolean insertUser(String username, String email, String passwordHash, Role role) {
         String sql = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";

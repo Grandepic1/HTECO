@@ -1,4 +1,5 @@
 package handler;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
@@ -35,18 +36,19 @@ public class LoginHandler implements HttpHandler {
                 return;
             }
 
-            String response = """
-                    {
-                      "id": %d,
-                      "username: "%s",
-                      "email": "%s",
-                      "role": "%s"
-                    }
-                    """.formatted(user.getId(), user.getUsername(), user.getEmail(), user.getRole());
+            JsonObject responseJson = new JsonObject();
 
+            responseJson.addProperty("id", user.getId());
+            responseJson.addProperty("username", user.getUsername());
+            responseJson.addProperty("email", user.getEmail());
+            responseJson.addProperty("role", user.getRole().name());
+
+            String response = responseJson.toString();
+
+            byte[] bytes = response.getBytes(StandardCharsets.UTF_8);
             exchange.getResponseHeaders().add("Content-Type", "application/json");
-            exchange.sendResponseHeaders(200, response.length());
-            exchange.getResponseBody().write(response.getBytes());
+            exchange.sendResponseHeaders(200, bytes.length);
+            exchange.getResponseBody().write(bytes);
             exchange.close();
 
         } catch (Exception e) {
