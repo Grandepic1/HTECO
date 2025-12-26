@@ -6,6 +6,7 @@ import handler.LoginHandler;
 import handler.RegisterHandler;
 import handler.StatusHandler;
 import handler.UserHandler;
+import handler.UserKendaraanHandler;
 
 import java.net.InetSocketAddress;
 
@@ -18,7 +19,8 @@ public class Main {
         server.createContext("/api/register", new RegisterHandler());
         server.createContext("/api/status", new StatusHandler());
         server.createContext("/users", new UserHandler());
-        server.createContext("/users/", new KendaraanHandler());
+        server.createContext("/users/", new UserKendaraanHandler());
+        server.createContext("/kendaraan", new KendaraanHandler());
 
         server.setExecutor(null);
         server.start();
