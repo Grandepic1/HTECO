@@ -33,6 +33,26 @@ public class KendaraanDAO {
         return list;
     }
 
+    public Kendaraan findById(int kendaraanId) {
+        String sql = "SELECT * FROM kendaraan WHERE id = ?";
+
+        try (Connection conn = k.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, kendaraanId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return KendaraanFactory.fromResultSet(rs);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Eksepsi : " + e);
+        }
+
+        return null;
+    }
+
     public void insert(int userId, String nama, String jenis,
             int emisiId, double efisiensi) {
 

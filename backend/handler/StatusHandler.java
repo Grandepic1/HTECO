@@ -11,6 +11,7 @@ public class StatusHandler implements HttpHandler {
 
         if (!exchange.getRequestMethod().equalsIgnoreCase("GET")) {
             exchange.sendResponseHeaders(405, -1);
+            exchange.close();
             return;
         }
 

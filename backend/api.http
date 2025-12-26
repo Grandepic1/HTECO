@@ -12,12 +12,12 @@ POST http://127.0.0.1:8080/api/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "username":"tes",
-    "email":"tes@gmail.com",
+    "username":"epal",
+    "email":"epal@gmail.com",
     "password":"123"
 }
 
 ### Kendaraan
-GET http://127.0.0.1:8080/api/users/ HTTP/1.1
+GET http://127.0.0.1:8080/api/status HTTP/1.1
 Content-Type: application/json
 
