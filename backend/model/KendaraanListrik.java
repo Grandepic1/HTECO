@@ -1,8 +1,8 @@
 package model;
 public class KendaraanListrik extends Kendaraan {
 
-    public KendaraanListrik(int  id, String nama, int emisi_id, double efisiensiKmPerLiter, int userId) {
-        super(id, nama, emisi_id, efisiensiKmPerLiter, userId);
+    public KendaraanListrik(int id, String nama, String plat_no, int emisi_id, double efisiensiKmPerLiter, int userId) {
+        super(id, nama, plat_no, emisi_id, efisiensiKmPerLiter, userId);
     }
     @Override
     public double hitungEmisi() {

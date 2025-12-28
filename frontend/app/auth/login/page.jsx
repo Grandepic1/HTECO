@@ -60,7 +60,7 @@ const LoginPage = () => {
         </form>
   
         <p className="mt-6 text-center text-sm text-slate-500">
-          Belum punya akun? <Link href="/authn/register" className="text-slate-900 font-semibold hover:underline">Register</Link>
+          Belum punya akun? <Link href="/auth/register" className="text-slate-900 font-semibold hover:underline">Register</Link>
         </p>
       </div>
     </div>

@@ -1,57 +1,42 @@
 package handler;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import model.User;
+import com.sun.net.httpserver.HttpExchange;
 import service.AuthService;
+import util.HttpHelper;
 
-public class RegisterHandler implements HttpHandler {
+public class RegisterHandler extends BaseHandler {
+
     private static final AuthService authService = new AuthService();
-    private Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     @Override
-    public void handle(HttpExchange exchange) {
-        try {
-            if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) {
-                exchange.sendResponseHeaders(405, -1);
-                return;
-            }
+    protected void execute(HttpExchange exchange) throws Exception {
 
-            InputStream is = exchange.getRequestBody();
-            String body = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-
-            JsonObject json = gson.fromJson(body, JsonObject.class);
-
-            String username = json.get("username").getAsString();
-            String email = json.get("email").getAsString();
-            String password = json.get("password").getAsString();
-
-            boolean success = authService.registerUser(username, email, password);
-
-            if (!success) {
-                exchange.sendResponseHeaders(401, -1);
-                return;
-            }
-
-            JsonObject responseJson = new JsonObject();
-
-            responseJson.addProperty("error", false);
-            responseJson.addProperty("message", "User successfully added");
-           
-            String response = responseJson.toString();
-
-            byte[] bytes = response.getBytes(StandardCharsets.UTF_8);
-            exchange.getResponseHeaders().add("Content-Type", "application/json");
-            exchange.sendResponseHeaders(200, bytes.length);
-            exchange.getResponseBody().write(bytes);
-            exchange.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!HttpHelper.isMethod(exchange, "POST")) {
+            methodNotAllowed(exchange);
+            return;
         }
+
+        String body = HttpHelper.readRequestBody(exchange);
+        JsonObject json = gson.fromJson(body, JsonObject.class);
+
+        String username = json.get("username").getAsString();
+        String email = json.get("email").getAsString();
+        String password = json.get("password").getAsString();
+
+        boolean success = authService.registerUser(username, email, password);
+
+        if (!success) {
+            HttpHelper.sendStatus(exchange, 401);
+            return;
+        }
+
+        JsonObject response = new JsonObject();
+        response.addProperty("success", true);
+        response.addProperty("message", "New Registered successfully added");
+
+        HttpHelper.sendJson(exchange, 200, response);
     }
 }

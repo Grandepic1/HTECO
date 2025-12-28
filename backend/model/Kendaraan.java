@@ -5,14 +5,16 @@ import java.util.ArrayList;
 public abstract class Kendaraan implements Emisiable {
     protected int id;
     protected String nama;
+    protected String plat_no;
     protected int emisi_id;
     protected double efisiensiKmPerLiter;
     protected int userId;
     protected ArrayList<Perjalanan> perjalanans;
 
-    public Kendaraan(int id, String nama, int emisi_id, double efisiensiKmPerLiter, int userId) {
+    public Kendaraan(int id, String nama, String plat_no,int emisi_id, double efisiensiKmPerLiter, int userId) {
         this.id = id;
         this.nama = nama;
+        this.plat_no = plat_no;
         this.emisi_id = emisi_id;
         this.efisiensiKmPerLiter = efisiensiKmPerLiter;
         this.userId = userId;

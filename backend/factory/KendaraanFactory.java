@@ -17,6 +17,7 @@ public class KendaraanFactory {
                 return new KendaraanBensin(
                         rs.getInt("id"),
                         rs.getString("nama"),
+                        rs.getString("plat_no"),
                         rs.getInt("emisi_id"),
                         rs.getDouble("efisiensi"),
                         rs.getInt("userId"));
@@ -25,6 +26,7 @@ public class KendaraanFactory {
                 return new KendaraanSolar(
                         rs.getInt("id"),
                         rs.getString("nama"),
+                        rs.getString("plat_no"),
                         rs.getInt("emisi_id"),
                         rs.getDouble("efisiensi"),
                         rs.getInt("userId"));
@@ -33,6 +35,7 @@ public class KendaraanFactory {
                 return new KendaraanListrik(
                         rs.getInt("id"),
                         rs.getString("nama"),
+                        rs.getString("plat_no"),
                         rs.getInt("emisi_id"),
                         rs.getDouble("efisiensi"),
                         rs.getInt("userId"));

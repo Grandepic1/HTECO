@@ -33,6 +33,26 @@ public class KendaraanDAO {
         return list;
     }
 
+    public ArrayList<Kendaraan> getAll() {
+        ArrayList<Kendaraan> list = new ArrayList<>();
+        String sql = "SELECT * FROM kendaraan";
+
+        try (Connection conn = k.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(KendaraanFactory.fromResultSet(rs));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Eksepsi : " + e);
+        }
+
+        return list;
+    }
+
     public Kendaraan findById(int kendaraanId) {
         String sql = "SELECT * FROM kendaraan WHERE id = ?";
 
@@ -53,22 +73,23 @@ public class KendaraanDAO {
         return null;
     }
 
-    public void insert(int userId, String nama, String jenis,
+    public void insert(int userId, String nama, String plat_no, String jenis,
             int emisiId, double efisiensi) {
 
         String sql = """
-                    INSERT INTO kendaraan (userId, nama, jenis_kendaraan, emisi_id, efisiensi)
-                    VALUES (?, ?, ?, ?, ?)
+                    INSERT INTO kendaraan (userId, plat_no, nama, jenis_kendaraan, emisi_id, efisiensi)
+                    VALUES (?, ?, ?, ?, ?, ?)
                 """;
 
         try (Connection c = k.getConnection();
                 PreparedStatement ps = c.prepareStatement(sql)) {
 
             ps.setInt(1, userId);
-            ps.setString(2, nama);
-            ps.setString(3, jenis);
-            ps.setInt(4, emisiId);
-            ps.setDouble(5, efisiensi);
+            ps.setString(2, plat_no);
+            ps.setString(3, nama);
+            ps.setString(4, jenis);
+            ps.setInt(5, emisiId);
+            ps.setDouble(6, efisiensi);
             ps.executeUpdate();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
