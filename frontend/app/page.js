@@ -5,7 +5,6 @@ import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/dashboard/NavbarNotLoggedIn';
 import NavbarNotLoggedIn from '@/components/dashboard/NavbarNotLoggedIn';
 
-
 const LandingPage = () => {
     return (
       <div className="min-h-screen flex flex-col font-sans bg-[#F7F7F5] text-slate-800 selection:bg-emerald-200">
