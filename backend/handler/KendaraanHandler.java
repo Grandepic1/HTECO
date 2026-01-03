@@ -3,64 +3,75 @@ package handler;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
-import dao.KendaraanDAO;
-import dao.UserDAO;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import model.Kendaraan;
-
 import java.util.HashMap;
-import model.PemilikKendaraan;
+
+import model.Kendaraan;
 import service.KendaraanService;
 import util.HttpHelper;
 
 public class KendaraanHandler extends BaseHandler {
-    private final KendaraanDAO kendaraanDAO = new KendaraanDAO();
+
     private final Gson gson = new Gson();
     private final KendaraanService kendaraanService = new KendaraanService();
+
     @Override
     protected void execute(HttpExchange exchange) throws Exception {
-        if (HttpHelper.isMethod(exchange, "POST")){
+
+        if (HttpHelper.isMethod(exchange, "POST")) {
             handlePost(exchange);
             return;
         }
 
-        if (HttpHelper.isMethod(exchange, "GET")){
+        if (HttpHelper.isMethod(exchange, "GET")) {
             handleGet(exchange);
             return;
         }
 
         methodNotAllowed(exchange);
-
     }
 
-    private void handleGet(HttpExchange exchange) throws Exception{
+    // =========================
+    // GET
+    // =========================
+    private void handleGet(HttpExchange exchange) throws Exception {
+
         HashMap<String, String> params = HttpHelper.getQueryParams(exchange);
 
-        if (params.containsKey("id")){
+        // GET /kendaraan?id=1
+        if (params.containsKey("id")) {
             int id = Integer.parseInt(params.get("id"));
-            Kendaraan kendaraan = kendaraanDAO.findById(id);
-            if (kendaraan==null){
-                HttpHelper.sendStatus(exchange, 400);
+
+            Kendaraan kendaraan = kendaraanService.getByIdWithPerjalanan(id);
+
+            if (kendaraan == null) {
+                HttpHelper.sendStatus(exchange, 404);
                 return;
             }
 
             HttpHelper.sendJson(exchange, 200, kendaraan);
             return;
         }
-        if (params.containsKey("userId")){
-            int id = Integer.parseInt(params.get("userId"));
 
-            ArrayList<Kendaraan> kendaraans = kendaraanDAO.findByUserId(id);
+        // GET /kendaraan?userId=1
+        if (params.containsKey("userId")) {
+            int userId = Integer.parseInt(params.get("userId"));
+
+            ArrayList<Kendaraan> kendaraans = kendaraanService.getByUserIdWithPerjalanan(userId);
 
             HttpHelper.sendJson(exchange, 200, kendaraans);
             return;
         }
-        ArrayList<Kendaraan> all = kendaraanDAO.getAll();
+        System.out.println("HIT BROO");
+        // GET /kendaraan
+        ArrayList<Kendaraan> all = kendaraanService.getAllWithPerjalanan();
+
         HttpHelper.sendJson(exchange, 200, all);
     }
 
+    // =========================
+    // POST
+    // =========================
     private void handlePost(HttpExchange exchange) throws Exception {
 
         String body = HttpHelper.readRequestBody(exchange);
@@ -71,7 +82,6 @@ public class KendaraanHandler extends BaseHandler {
             return;
         }
 
-        // Validate required fields
         String[] required = {
                 "userId",
                 "platNomor",
@@ -116,6 +126,5 @@ public class KendaraanHandler extends BaseHandler {
         response.addProperty("message", "Kendaraan successfully added");
 
         HttpHelper.sendJson(exchange, 201, response);
-    }   
-    
+    }
 }

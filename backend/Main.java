@@ -1,5 +1,6 @@
 
 import com.sun.net.httpserver.HttpServer;
+import handler.FaktorEmisiHandler;
 import handler.KendaraanHandler;
 import handler.LoginHandler;
 import handler.RegisterHandler;
@@ -15,6 +16,7 @@ public class Main {
         server.createContext("/api/register", new RegisterHandler());
         server.createContext("/api/status", new StatusHandler());
         server.createContext("/api/kendaraan", new KendaraanHandler());
+        server.createContext("/api/faktoremisi", new FaktorEmisiHandler());
        
 
         server.setExecutor(null);

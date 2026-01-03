@@ -1,13 +1,19 @@
 package model;
+
 public class KendaraanListrik extends Kendaraan {
 
-    public KendaraanListrik(int id, String nama, String plat_no, int emisi_id, double efisiensiKmPerLiter, int userId) {
-        super(id, nama, plat_no, emisi_id, efisiensiKmPerLiter, userId);
+    private double konsumsiKwhPerKm;
+
+    public KendaraanListrik(int id, String nama, String plat_no, String jenisKendaraan,
+            FaktorEmisi faktorEmisi,
+            double konsumsiKwhPerKm, int userId) {
+        super(id, nama, plat_no, jenisKendaraan, faktorEmisi, konsumsiKwhPerKm, userId);
+        this.konsumsiKwhPerKm = konsumsiKwhPerKm;
     }
+
     @Override
-    public double hitungEmisi() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hitungEmisi'");
+    public double hitungEmisi(Perjalanan p) {
+        double kwh = p.getJarakKm() * konsumsiKwhPerKm;
+        return kwh * faktorEmisi.getFaktorCO2perLiter();
     }
-    
 }

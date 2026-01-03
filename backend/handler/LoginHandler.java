@@ -14,15 +14,12 @@ public class LoginHandler extends BaseHandler {
 
     @Override
     protected void execute(HttpExchange exchange) throws Exception {
-        System.out.println("HIT 1");
         if (!HttpHelper.isMethod(exchange, "POST")) {
             methodNotAllowed(exchange);
             return;
         }
-        System.out.println("HIT 2");
         String body = HttpHelper.readRequestBody(exchange);
         JsonObject json = gson.fromJson(body, JsonObject.class);
-        System.out.println("HIT 3");
         String username = json.get("username").getAsString();
         String password = json.get("password").getAsString();
 

@@ -12,4 +12,8 @@ public class Perjalanan{
         this.tanggal = tanggal;
         this.kendaraan_id = kendaraan_id;
     }
+
+    public double getJarakKm() {
+        return jarakKm;
+    }
 }

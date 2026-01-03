@@ -22,7 +22,7 @@ GET http://127.0.0.1:5000/api/kendaraan HTTP/1.1
 Content-Type: application/json
 
 ### Get Kendaraan by Id
-GET http://127.0.0.1:5000/api/kendaraan?id=1 HTTP/1.1
+GET http://127.0.0.1:5000/api/kendaraan?id=2 HTTP/1.1
 Content-Type: application/json
 
 ### Get Kendaraan by userId
@@ -45,6 +45,12 @@ Content-Type: application/json
 ### Faktor Emisi
 GET http://127.0.0.1:5000/api/faktoremisi HTTP/1.1
 Content-Type: application/json
+
+
+### Faktor Emisi by id
+GET http://127.0.0.1:5000/api/faktoremisi?id=2 HTTP/1.1
+Content-Type: application/json
+
 
 ### Add Faktor Emisi
 POST http://127.0.0.1:5000/api/faktoremisi HTTP/1.1

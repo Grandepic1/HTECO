@@ -1,5 +1,5 @@
 package model;
 
 public interface Emisiable {
-    public double hitungEmisi();
+    public double hitungEmisi(Perjalanan p);
 }

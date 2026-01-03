@@ -1,48 +1,48 @@
 package service;
 
-import dao.KendaraanDAO;
-import dao.UserDAO;
 import java.util.ArrayList;
+
+import dao.KendaraanDAO;
+import dao.PerjalananDAO;
 import model.Kendaraan;
-import model.PemilikKendaraan;
 
 public class KendaraanService {
-    private KendaraanDAO kendaraanDAO = new KendaraanDAO();
-    private UserDAO userDao = new UserDAO();
 
-    public void refreshKendaraanPemilik(PemilikKendaraan pemilik) {
-        ArrayList<Kendaraan> dbData = kendaraanDAO.findByUserId(pemilik.getId());
+    private final KendaraanDAO kendaraanDAO = new KendaraanDAO();
+    private final PerjalananDAO perjalananDAO = new PerjalananDAO();
 
-        pemilik.refreshKendaraans(dbData);
+    public Kendaraan getByIdWithPerjalanan(int kendaraanId) {
+        Kendaraan k = kendaraanDAO.findById(kendaraanId);
+        if (k != null) {
+            k.refreshKendaraans(
+                    perjalananDAO.findByKendaraanId(kendaraanId));
+        }
+        return k;
     }
-    
-    public boolean addKendaraan(int userId,
-            String nama,
-            String plat_no,
-            String jenis,
-            int emisiId,
-            double efisiensi) {
 
-            PemilikKendaraan pemilik = (PemilikKendaraan) userDao.findById(userId);
-            if (pemilik == null) return false;
+    public ArrayList<Kendaraan> getByUserIdWithPerjalanan(int userId) {
+        ArrayList<Kendaraan> list = kendaraanDAO.findByUserId(userId);
 
-        kendaraanDAO.insert(
-                pemilik.getId(),
-                nama,
-                plat_no,
-                jenis,
-                emisiId,
-                efisiensi);
+        for (Kendaraan k : list) {
+            k.refreshKendaraans(
+                    perjalananDAO.findByKendaraanId(k.getId()));
+        }
+        return list;
+    }
 
-        // sync object with DB
-        refreshKendaraanPemilik(pemilik);
+    public ArrayList<Kendaraan> getAllWithPerjalanan() {
+        ArrayList<Kendaraan> list = kendaraanDAO.getAll();
+
+        for (Kendaraan k : list) {
+            k.refreshKendaraans(
+                    perjalananDAO.findByKendaraanId(k.getId()));
+        }
+        return list;
+    }
+
+    public boolean addKendaraan(int userId, String nama, String platNo,
+            String jenis, int emisiId, double efisiensi) {
+        kendaraanDAO.insert(userId, nama, platNo, jenis, emisiId, efisiensi);
         return true;
     }
-
-    public void deleteKendaraan(PemilikKendaraan pemilik, int kendaraanId) {
-
-        kendaraanDAO.delete(kendaraanId, pemilik.getId());
-        refreshKendaraanPemilik(pemilik);
-    }
-
 }

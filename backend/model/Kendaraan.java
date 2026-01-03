@@ -6,23 +6,28 @@ public abstract class Kendaraan implements Emisiable {
     protected int id;
     protected String nama;
     protected String plat_no;
-    protected int emisi_id;
-    protected double efisiensiKmPerLiter;
+    protected FaktorEmisi faktorEmisi;
+    protected String jenisKendaraan;
     protected int userId;
-    protected ArrayList<Perjalanan> perjalanans;
+    protected ArrayList<Perjalanan> perjalanans = new ArrayList<>();;
 
-    public Kendaraan(int id, String nama, String plat_no,int emisi_id, double efisiensiKmPerLiter, int userId) {
+    public Kendaraan(int id, String nama, String plat_no, String jenisKendaraan,
+            FaktorEmisi faktorEmisi, double efisiensi, int userId) {
         this.id = id;
         this.nama = nama;
         this.plat_no = plat_no;
-        this.emisi_id = emisi_id;
-        this.efisiensiKmPerLiter = efisiensiKmPerLiter;
+        this.jenisKendaraan = jenisKendaraan;
+        this.faktorEmisi = faktorEmisi;
         this.userId = userId;
-        this.perjalanans = new ArrayList<>();
     }
 
-    @Override
-    public abstract double hitungEmisi();
+    public double hitungTotalEmisi(FaktorEmisi faktorEmisi) {
+        double total = 0;
+        for (Perjalanan p : perjalanans) {
+            total += hitungEmisi(p);
+        }
+        return total;
+    }
     
     @Override
     public String toString() {
@@ -39,6 +44,10 @@ public abstract class Kendaraan implements Emisiable {
         perjalanans.addAll(newPerjalanans);
     }
 
+    public String getJenisKendaraan() {
+        return jenisKendaraan;
+    }
+
     public int getId() {
         return id;
     }
@@ -47,13 +56,11 @@ public abstract class Kendaraan implements Emisiable {
         return nama;
     }
 
-    public int getEmisi_id() {
-        return emisi_id;
+    public FaktorEmisi getFaktorEmisi() {
+        return faktorEmisi;
     }
 
-    public double getEfisiensiKmPerLiter() {
-        return efisiensiKmPerLiter;
-    }
+  
 
 
     

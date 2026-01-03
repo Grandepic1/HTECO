@@ -10,7 +10,7 @@ import util.Koneksi;
 public class PerjalananDAO {
     private final Koneksi k = new Koneksi();
 
-    public ArrayList<Perjalanan> findByKendaraan(int kendaraanId) {
+    public ArrayList<Perjalanan> findByKendaraanId(int kendaraanId) {
         ArrayList<Perjalanan> perjalanans = new ArrayList<>();
 
         String sql = "SELECT * FROM perjalanan WHERE kendaraan_id = ?";
