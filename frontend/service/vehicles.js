@@ -30,7 +30,34 @@ export async function getVehicles() {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((data) => data.json()).then((data) => console.log(data));
+  }).then((data) => data.json()).then((data) => data);
+}
+
+export async function addPerjalanan(perjalananData) {
+  const payload = {
+    kendaraanId: perjalananData.kendaraanId,
+    jarakKm: perjalananData.jarakKm,
+    tanggal_jam: perjalananData.tanggal_jam,
+  };
+
+  return await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/perjalanan`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  }).then((data) => data.json()).then((data) => data);
+}
+
+export async function getTrips() {
+  const userData = JSON.parse(localStorage.getItem("data"));
+
+  return await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/perjalanan?userId=${userData.id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((data) => data.json()).then((data) => data);
 }
 
 function getEmisiId(fuelType, emisiList) {

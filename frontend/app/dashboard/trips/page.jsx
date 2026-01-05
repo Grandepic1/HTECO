@@ -2,12 +2,12 @@
 import { useState, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
-import Link from "next/link";
 import DashboardBackButton from "@/components/ui/BackButton";
+import { addPerjalanan, getTrips } from "@/service/vehicles";
 
-// Import fungsi getVehicles
 async function getVehicles() {
 	const userData = JSON.parse(localStorage.getItem("data"));
+	const [trips, setTrips] = useState([]);
 
 	return await fetch(
 		`${process.env.NEXT_PUBLIC_BASE_API}/api/kendaraan?userId=${userData.id}`,
@@ -29,14 +29,12 @@ export default function TripsPage() {
 	const [isAdding, setIsAdding] = useState(false);
 	const [formData, setFormData] = useState({ vehicleId: "", distance: "" });
 
-	// Fetch vehicles saat component mount
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const vehiclesData = await getVehicles();
 				setVehicles(vehiclesData);
 
-				// Set default vehicle pertama
 				if (vehiclesData.length > 0) {
 					setFormData((prev) => ({ ...prev, vehicleId: vehiclesData[0].id }));
 				}
@@ -50,15 +48,23 @@ export default function TripsPage() {
 		fetchData();
 	}, []);
 
+	const renderTrips = async () => {
+		setTrips(await getTrips());
+	};
+
+	useEffect(() => {
+		renderTrips();
+	}, []);
+
+	console.log(trips);
+
 	const handleAddTrip = (e) => {
 		e.preventDefault();
 
-		// Cari vehicle yang dipilih
 		const selectedVehicle = vehicles.find(
 			(v) => v.id === parseInt(formData.vehicleId)
 		);
 
-		// Kalkulasi emisi berdasarkan faktorCO2perLiter dari faktorEmisi
 		const emission = (
 			formData.distance * (selectedVehicle?.faktorEmisi?.faktorCO2perLiter || 0.12)
 		).toFixed(2);
@@ -73,6 +79,31 @@ export default function TripsPage() {
 			jenisKendaraan: selectedVehicle?.jenisKendaraan,
 		};
 
+		const now = new Date();
+
+		const formatDateTime = (date) => {
+			const pad = (n) => String(n).padStart(2, "0");
+
+			return (
+				`${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+					date.getDate()
+				)} ` +
+				`${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(
+					date.getSeconds()
+				)}`
+			);
+		};
+
+		const perjalananData = {
+			kendaraanId: formData.vehicleId,
+			jarakKm: parseFloat(formData.distance),
+			tanggal_jam: formatDateTime(now),
+		};
+
+		console.log(perjalananData);
+
+		addPerjalanan(perjalananData);
+
 		setTrips([newTrip, ...trips]);
 		setIsAdding(false);
 		setFormData({ vehicleId: vehicles[0]?.id || "", distance: "" });
@@ -83,7 +114,6 @@ export default function TripsPage() {
 	};
 
 	const handleUpdate = (id) => {
-		// TODO: Implementasi update
 		console.log("Update trip:", id);
 	};
 
@@ -176,9 +206,13 @@ export default function TripsPage() {
 								🚗
 							</div>
 							<div>
-								<p className="font-bold text-slate-800">{trip.vehicle}</p>
+								<p className="font-bold text-slate-800">{trip.namaKendaraan}</p>
 								<p className="text-sm text-slate-500">
-									{trip.date} • Jarak: {trip.distance} km
+									{new Intl.DateTimeFormat("id-ID", {
+										dateStyle: "full",
+										timeStyle: "short",
+									}).format(new Date(trip.tanggalJam))}{" "}
+									• Jarak: {trip.jarakKm}
 								</p>
 							</div>
 						</div>
@@ -186,7 +220,10 @@ export default function TripsPage() {
 						<div className="flex items-center gap-6">
 							<div className="text-right">
 								<p className="text-xs text-slate-400 uppercase font-bold">Emisi</p>
-								<p className="text-lg font-bold text-slate-900">{trip.emission} kg</p>
+								{/* <p className="text-lg font-bold text-slate-900">{trip.emission} kg</p> */}
+								<p className="text-lg font-bold text-slate-900">
+									{trip.emisiKgCO2} kg CO₂/L
+								</p>
 							</div>
 
 							<div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

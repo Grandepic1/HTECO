@@ -7,15 +7,22 @@ import { login } from "@/service/login";
 const LoginPage = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const [error, setError] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
-	const [role, setRole] = useState("user");
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setError("");
+		setIsLoading(true);
 
-		login(username, password);
-
-		window.location.href = "/dashboard";
+		try {
+			await login(username, password);
+			window.location.href = "/dashboard";
+		} catch (err) {
+			setError(err.message || "Login gagal. Silakan coba lagi.");
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -29,34 +36,24 @@ const LoginPage = () => {
 					</p>
 				</div>
 
-				{/* <div className="flex bg-slate-100 p-1 rounded-lg mb-6">
-					<button
-						onClick={() => setRole("user")}
-						className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${
-							role === "user" ? "bg-white shadow text-slate-900" : "text-slate-500"
-						}`}>
-						Pegawai (User)
-					</button>
-					<button
-						onClick={() => setRole("admin")}
-						className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${
-							role === "admin" ? "bg-white shadow text-slate-900" : "text-slate-500"
-						}`}>
-						Admin / Spv
-					</button>
-				</div> */}
+				{error && (
+					<div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+						<p className="text-sm text-red-600 text-center">Username atau Password Salah!</p>
+					</div>
+				)}
 
 				<form onSubmit={handleSubmit} className="space-y-4">
 					<div>
 						<label className="block text-xs font-semibold text-slate-500 uppercase mb-1">
-							Email
+							USERNAME
 						</label>
 						<input
 							onChange={(e) => setUsername(e.target.value)}
 							type="text"
-							placeholder="nama@kantor.com"
+							placeholder="Yanto Kurniawati"
 							className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-400 outline-none"
 							required
+							disabled={isLoading}
 						/>
 					</div>
 					<div>
@@ -69,11 +66,15 @@ const LoginPage = () => {
 							placeholder="••••••••"
 							className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-400 outline-none"
 							required
+							disabled={isLoading}
 						/>
 					</div>
 
-					<button className="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition-all">
-						Login
+					<button
+						type="submit"
+						disabled={isLoading}
+						className="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+						{isLoading ? "Loading..." : "Login"}
 					</button>
 				</form>
 

@@ -1,16 +1,21 @@
-export async function login(
-  username,
-  password
-) {
-  const data = {username: username, password: password}
+export async function login(username, password) {
+  const data = { username: username, password: password };
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/login`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  }).then((data) => data.json()).then((data) => localStorage.setItem("data", JSON.stringify(data)));
+  });
 
-  return res.json();
+  const result = await response.json();
+
+  if (!response.ok || result.error) {
+    throw new Error(result.message || "Login gagal. Username atau password salah.");
+  }
+
+  localStorage.setItem("data", JSON.stringify(result));
+
+  return result;
 }

@@ -10,7 +10,6 @@ export const metadata = {
 
 import Navbar from "@/components/dashboard/Navbar";
 
-
 export default function DashboardLayout({ children }) {
   return (
     <html>
